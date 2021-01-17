@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 '''
 entrydns-updater.py ~ ajclarkson.co.uk
 
@@ -7,7 +7,7 @@ Performs an update for each given domain access token in
 the hosts.json file.
 '''
 import json
-from urllib2 import urlopen
+from urllib.request import urlopen
 import requests
 import os
 from time import strftime
@@ -41,8 +41,8 @@ def set_cached_ip(ip):
 		cached_file = open(SCRIPT_PATH + '.entrydns-cachedip', 'w')
 		cached_file.write(ip)
 		cached_file.close()
-	except IOError, e:
-		print e
+	except IOError as e:
+		print (e)
 
 def get_ip():
 	'''
@@ -68,8 +68,8 @@ def load_hosts():
 		hosts_file = open(SCRIPT_PATH + 'hosts.json', 'r')
 		hosts_data = json.load(hosts_file)
 		return hosts_data
-	except IOError, e:
-		print e
+	except IOError as e:
+		print (e)
 
 def update_host(token, current_ip):
 	'''
@@ -97,6 +97,6 @@ if cached_ip != current_ip:
 	hosts = load_hosts()
 	for host in hosts:
 		result = update_host(hosts[host], current_ip)
-		print "%s -- Updating %s: %s" % (strftime("%Y-%m-%d %H:%M:%S"),host, result)
+		print ( "%s -- Updating %s: %s" % (strftime("%Y-%m-%d %H:%M:%S"),host, result) )
 else:
-	print "%s -- Public IP Matches Cache (%s), Nothing to Do..." % (strftime("%Y-%m-%d %H:%M:%S"), current_ip)
+	print ( "%s -- Public IP Matches Cache (%s), Nothing to Do..." % (strftime("%Y-%m-%d %H:%M:%S"), current_ip) )
